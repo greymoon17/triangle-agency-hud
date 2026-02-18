@@ -1,0 +1,285 @@
+/* =========================================
+   1. HUD 容器与按钮 (原有基础优化)
+   ========================================= */
+#ta-hud-container {
+    position: fixed;
+    top: 80px; 
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 60;
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    
+    padding: 8px 15px;
+    background: #ffffff;
+    border: 2px solid #c0222f;
+    border-radius: 5px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); /* 加深阴影 */
+    
+    /* 入场动画 */
+    animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+    from { top: -50px; opacity: 0; }
+    to { top: 80px; opacity: 1; }
+}
+
+.ta-hud-btn {
+    min-width: 100px;
+    height: 32px;
+    padding: 0 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-family: "Signika", sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    color: white;
+    text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+/* 按钮光效动画 */
+.ta-hud-btn::after {
+    content: "";
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.5s;
+}
+.ta-hud-btn:hover::after { left: 100%; }
+.ta-hud-btn:hover { filter: brightness(1.1); transform: translateY(-2px); }
+.ta-hud-btn:active { transform: translateY(1px); box-shadow: none; }
+
+/* 按钮颜色定义 */
+.btn-reality { background-color: #c0222f; }
+.btn-chaos   { background-color: #2752a2; }
+.btn-weather { background-color: #27ae60; }
+.btn-status  { background-color: #7f8c8d; }
+
+.ta-hud-divider {
+    width: 1px; height: 25px; background-color: #ccc; margin: 0 5px;
+}
+
+/* =========================================
+   2. 聊天卡片样式 (适配 v2.3 宏)
+   ========================================= */
+
+/* 基础卡片容器 */
+.ta-chat-card {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    font-family: 'Articulat CF Regular', 'Signika', sans-serif;
+    color: #333;
+    overflow: hidden;
+}
+
+/* 头部与标题 */
+.ta-chat-header {
+    display: flex; align-items: center; gap: 6px;
+    font-weight: bold; font-size: 1em;
+    border-bottom: 2px solid; margin-bottom: 8px; padding-bottom: 4px;
+}
+.ta-chat-title {
+    text-align: center; color: white; padding: 6px;
+    border-radius: 4px; font-weight: bold; font-size: 1.15em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+/* 骰子结果展示格 (Dialog中使用) */
+.ta-dice-box {
+    display: inline-block;
+    width: 32px; height: 32px;
+    line-height: 28px;
+    text-align: center;
+    border: 2px solid #ccc;
+    margin: 3px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 16px;
+    background: white;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
+/* QA 调整器样式 */
+.ta-qa-adjust-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.ta-qa-btn-group { display: flex; align-items: center; background: #eee; border-radius: 4px; padding: 2px; }
+.ta-qa-btn { width: 24px; height: 24px; border: none; background: transparent; cursor: pointer; font-weight: bold; }
+.ta-qa-btn:hover { background: #ddd; }
+.ta-qa-input { width: 30px; text-align: center; border: none; background: transparent; font-weight: bold; }
+
+/* 状态框 */
+.ta-chat-sponsor {
+    margin: 10px 0; text-align: center; background: #fff8e1;
+    color: #d35400; padding: 6px; border: 1px solid #f39c12;
+    border-radius: 4px; font-size: 0.85em;
+    box-shadow: 0 2px 5px rgba(243, 156, 18, 0.2);
+}
+
+/* 结果说明 */
+.ta-chat-body { margin-top: 10px; font-size: 0.9em; line-height: 1.5; }
+
+/* 按钮: 应用混沌 */
+.ta-apply-chaos {
+    width: 100%; margin-top: 10px; padding: 6px;
+    background: #2c3e50; color: #ffadad;
+    border: 1px solid #c0392b; border-radius: 4px;
+    cursor: pointer; font-weight: bold;
+    transition: 0.2s;
+}
+.ta-apply-chaos:hover { background: #1a252f; color: #ffcccc; }
+.ta-apply-chaos:disabled { background: #95a5a6; color: #ecf0f1; border-color: #7f8c8d; cursor: not-allowed; }
+
+/* 主题颜色类 */
+.ta-theme-reality { border-color: #c0222f; }
+.ta-theme-reality .ta-chat-header { color: #c0222f; border-color: #c0222f; }
+.ta-theme-anomaly { border-color: #2752a2; }
+.ta-theme-anomaly .ta-chat-header { color: #2752a2; border-color: #2752a2; }
+
+/* 规则提示框 */
+.ta-chat-rule-box { margin-top: 5px; padding: 8px; border-radius: 4px; font-size: 0.9em; }
+.ta-chat-rule-success { background: #e8f5e9; color: #1b5e20; border-left: 4px solid #2ecc71; }
+.ta-chat-rule-fail    { background: #ffebee; color: #b71c1c; border-left: 4px solid #e74c3c; }
+
+/* ... (保留你原有的按钮样式) ... */
+
+/* =========================================
+   字体强制类
+   ========================================= */
+.ta-font-bold {
+    font-family: 'Articulat CF Bold', 'Articulat CF', 'Signika', sans-serif !important;
+    font-weight: bold;
+}
+.ta-font-reg {
+    font-family: 'Articulat CF Regular', 'Articulat CF', 'Signika', sans-serif !important;
+    font-weight: normal;
+}
+
+/* =========================================
+   聊天卡片基础
+   ========================================= */
+.ta-chat-card {
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: 2px solid #ccc;
+    color: #333;
+    overflow: hidden;
+}
+
+.ta-chat-header {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 1em; border-bottom: 2px solid;
+    margin-bottom: 8px; padding-bottom: 4px;
+}
+
+/* 结果标题 (成功/失败) */
+.ta-chat-title {
+    text-align: center; color: white; padding: 6px;
+    border-radius: 4px; font-size: 1.15em;
+    margin-bottom: 10px;
+}
+
+/* =========================================
+   三重升华/UNL3ASH 专用样式 (纯文字修正版)
+   ========================================= */
+
+/* 奖励卡片容器 */
+.ta-reward-card {
+    margin-top: 6px;
+    border: 2px solid; 
+    border-radius: 6px;
+    background: #fff;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* 标题条：回归基础，确保文字紧凑 */
+.ta-reward-header {
+    width: 100%;
+    display: block;          /* 块级元素 */
+    text-align: center;      /* 文字水平居中 */
+    padding: 8px 0;
+    
+    color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+    font-family: 'Articulat CF Bold', 'Signika', sans-serif !important;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    line-height: 1.2;        /* 防止行高过大影响垂直对齐 */
+}
+
+/* 内容区域 */
+.ta-reward-content {
+    padding: 15px 10px;
+    line-height: 1.6;
+    color: #333;
+    font-family: 'Articulat CF Regular', sans-serif !important;
+}
+
+/* ... ta-opt-title 等保持不变 ... */
+
+.ta-opt-title {
+    font-size: 1.1em;
+    margin-top: 10px;
+    display: block;
+    font-weight: bold;
+}
+
+.ta-opt-desc {
+    font-size: 0.9em;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+/* =========================================
+   详情展示区 (骰子/QA)
+   ========================================= */
+.ta-stats-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5px; margin: 8px 0; font-size: 0.9em;
+    background: #f8f9fa; padding: 5px; border-radius: 4px;
+}
+
+.ta-dice-box {
+    display: inline-block; width: 30px; height: 30px;
+    line-height: 28px; text-align: center;
+    border: 2px solid #ccc; margin: 2px;
+    border-radius: 4px; font-weight: bold;
+    background: white;
+}
+
+/* 按钮与提示 */
+.ta-apply-chaos {
+    width: 100%; margin-top: 10px; padding: 6px;
+    background: #222; color: #ff9999;
+    border: 1px solid #660000; cursor: pointer;
+}
+.ta-chat-tips { margin-top:8px; padding-top:5px; border-top:1px dashed #ccc; font-size:0.85em; }
+.ta-chat-sponsor { background:#fff8e1; color:#d35400; border:1px solid #f39c12; padding:5px; margin:10px 0; font-size:0.85em; text-align:center; }
+
+/* 颜色主题 */
+.ta-theme-reality { border-color: #c0222f; }
+.ta-theme-reality .ta-chat-header { color: #c0222f; border-color: #c0222f; }
+.ta-theme-anomaly { border-color: #2752a2; }
+.ta-theme-anomaly .ta-chat-header { color: #2752a2; border-color: #2752a2; }
+
+.ta-bg-reality { background-color: #c0222f; }
+.ta-bg-anomaly { background-color: #2752a2; }
+.ta-bg-success { background-color: #006400; }
+.ta-bg-fail    { background-color: #555555; }

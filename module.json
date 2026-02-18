@@ -1,0 +1,32 @@
+{
+  "id": "triangle-agency-hud",
+  "title": "三角机构行动面板 (TA HUD)",
+  "description": "在屏幕上添加常驻的操作按钮，集成检定、天气与混沌控制。",
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "13",
+    "verified": "13"
+  },
+  "authors": [
+    {
+      "name": "肆贰"
+    }
+  ],
+  "esmodules": ["main.js"],
+  "styles": ["hud.css"],
+  "relationships": {
+    "systems": [{ "id": "triangleagency", "type": "system" }]
+  },
+  "packs": [
+    {
+      "name": "ta-hud-macros",
+      "label": "三角机构HUD宏",
+      "path": "packs/macros",
+      "type": "Macro",
+      "system": "triangleagency"
+    }
+  ],
+  "url": "https://github.com/greymoon17/triangle-agency-hud",
+  "manifest": "https://github.com/greymoon17/triangle-agency-hud/releases/latest/download/module.json",
+  "download": "https://github.com/greymoon17/triangle-agency-hud/releases/download/v1.0.0/module.zip"
+}
