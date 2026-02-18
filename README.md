@@ -1,7 +1,7 @@
 # Triangle Agency HUD (TA HUD) | 三角机构行动面板
 
 
-**TA HUD** 是专为 Foundry VTT [Triangle Agency (三角机构)](https://github.com/TriangleAgency/TriangleAgency-FVTT) 系统设计的辅助模组。它在屏幕顶部提供了一个常驻的悬浮面板，集成了掷骰检定、资源管理、天气控制与混沌操作，旨在为 GM 和玩家提供丝滑的“职场”体验。
+**TA HUD** 是专为 Foundry VTT [Triangle Agency (三角机构)](https://www.twincitiesrpg.com/mystyldyne/triangleagency) 系统设计的辅助模组。它在屏幕顶部提供了一个常驻的悬浮面板，集成了掷骰检定、资源管理、天气控制与混沌操作，旨在为 GM 和玩家提供丝滑的“职场”体验。
 
 ---
 
@@ -70,4 +70,5 @@
 MIT License.
 
 ---
+
 *Created by 肆贰*
